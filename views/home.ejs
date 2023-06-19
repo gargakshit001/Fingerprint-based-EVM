@@ -1,0 +1,78 @@
+<%- include('partials/header'); -%>
+
+<div >
+    <div class="container">
+      <div class="row" id="electionsRow" >
+
+<!-- Lopping through the db for the different types of elections.   -->
+        <% for(var i = 0; i< allValues.length ;i++){ %>
+          <button type="submit" class="election-btn btn btn-sm col-md-4"> 
+          <div class="card box-shadow">
+            <div class="card-body">
+              <h3 class="eleTitle"><%= allValues[i].Name%></h3>
+              <p class="card-text"><%=allValues[i].description%></p>
+            </div>
+        </div>
+        </button>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+<!-- Adding a new election type in the db. -->
+
+<!-- <form action="/home" method="post">
+  <input type="text" name="electionName">
+  <input type="text" name="electionDescription">
+  <button class="btn btn-md btn-outline-secondary" type="submit">Add Election</button>
+</form> -->
+
+<button id="openPopupBtn">Add Election</button>
+
+<div id="popup" class="popup">
+  <form action="/home" method="post" class="popup-content">
+    <span class="close" id="closePopup">&times;</span>
+    <h2>Enter Election Details</h2>
+    <label for="name"><b>Name</b></label>
+    <input type="text"  name="electionName" required>
+    <label for="gender"><b>Description</b></label>
+    <input type="text" name="electionDescription" required>
+    <button id="submitBtn">Submit</button>
+  </form>
+</div>
+  
+
+
+
+<script>
+
+//Template for different elections.
+const buttons = document.querySelectorAll('.btn-sm');
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    const h3Tags = button.querySelectorAll('h3');
+    h3Tags.forEach(h3 => {
+      window.location.href = "http://localhost:3000/elections/" + h3.textContent;
+    });
+  });
+});
+
+document.getElementById('openPopupBtn').addEventListener('click', function() {
+  document.getElementById('popup').style.display = 'block';
+});
+
+document.getElementById('closePopup').addEventListener('click', function() {
+  document.getElementById('popup').style.display = 'none';
+});
+
+document.getElementById('submitBtn').addEventListener('click', function() {
+  const inputFieldValue = document.getElementById('inputField').value;
+  console.log('Input value:', inputFieldValue);
+  document.getElementById('popup').style.display = 'none';
+});
+
+
+
+</script>
+
+<%- include('partials/footer'); -%>
